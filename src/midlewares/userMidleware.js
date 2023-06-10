@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const SECRET = process.env.SECRET
+
 const validateCreateUser = (req, res, next)=>{
   const { email, password, name } = req.body
   
@@ -13,6 +17,23 @@ const validateCreateUser = (req, res, next)=>{
     return res.status(400).json({message: "This name is not valid."})
   } else {
     return next()
+  }
+}
+
+const validateToken = (req, res, next)=>{
+  try {
+    const [, token] = req.headers.authorization.split(' ')
+    
+    if (!token){
+      return res.status(401).json({message: "Token invalid"})
+    }
+
+    jwt.verify(token, SECRET)
+
+    return next()
+  } catch (error) {
+    console.log(error.message)
+    return res.status(400).json({message: "Token invalid"})
   }
 }
 
@@ -41,5 +62,6 @@ const validatePass = (pass)=>{
 }
 
 module.exports = {
-  validateCreateUser
+  validateCreateUser,
+  validateToken
 }
