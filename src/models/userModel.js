@@ -14,7 +14,15 @@ const getUserByEmail = async (email)=>{
 	return user.rows[0].exists
 }
 
+const getUserForLogin = async (email, pass)=>{
+	const user = await db.query(`
+		select email, password from public.ec_users where email = '${email}'
+	`)
+	return user.rows[0]
+}
+
 module.exports = {
 	createUser,
-	getUserByEmail
+	getUserByEmail,
+	getUserForLogin
 }
