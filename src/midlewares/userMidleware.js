@@ -20,7 +20,7 @@ const validateCreateUser = (req, res, next)=>{
   }
 }
 
-const validateToken = (req, res, next)=>{
+const validateTokenCustomer = (req, res, next)=>{
   try {
     const [, token] = req.headers.authorization.split(' ')
     
@@ -63,5 +63,5 @@ const validatePass = (pass)=>{
 
 module.exports = {
   validateCreateUser,
-  validateToken
+  validateTokenCustomer
 }

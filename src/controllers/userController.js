@@ -42,7 +42,7 @@ const getUserForLogin = async (req, res)=>{
     const userNoPass = {
       email: user.email,
       name: user.name,
-      type: user.type_user
+      type_user: user.type_user
     }
 
     const SECRET = process.env.SECRET

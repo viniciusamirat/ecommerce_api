@@ -16,7 +16,7 @@ const getUserByEmail = async (email)=>{
 
 const getUserForLogin = async (email, pass)=>{
 	const user = await db.query(`
-		select email, password, type_user from public.ec_users where email = '${email}'
+		select email, password, name, type_user from public.ec_users where email = '${email}'
 	`)
 	return user.rows[0]
 }
