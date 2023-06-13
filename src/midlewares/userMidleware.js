@@ -37,6 +37,26 @@ const validateTokenCustomer = (req, res, next)=>{
   }
 }
 
+const validateTokenAdmin = (req, res, next)=>{
+  try {
+    const [, token] = req.headers.authorization.split(' ')
+
+    const user = jwt.verify(token, SECRET)
+
+    const { email, name, type_user } = JSON.parse(user.user)
+
+    if (type_user === 'admin'){
+      return next()
+    } else {
+      return res.status(401).json({message: "You don't have permission."})
+    }
+
+  } catch (error) {
+    console.log(error.message)
+    return res.status(400).json({message: "Token invalid"})
+  }
+}
+
 const validateName = (name)=>{
   if((name === undefined) || (name === null) || (String(name).trim() === '')){
     return false
@@ -63,5 +83,6 @@ const validatePass = (pass)=>{
 
 module.exports = {
   validateCreateUser,
-  validateTokenCustomer
+  validateTokenCustomer,
+  validateTokenAdmin
 }
