@@ -39,11 +39,17 @@ const getUserForLogin = async (req, res)=>{
       return res.status(404).json({message: "E-mail or password incorrect."})
     }
 
+    const userNoPass = {
+      email: user.email,
+      name: user.name,
+      type: user.type_user
+    }
+
     const SECRET = process.env.SECRET
 
     const token = jwt.sign(
       {
-        user: JSON.stringify(user)
+        user: JSON.stringify(userNoPass)
       },
       SECRET
     )
