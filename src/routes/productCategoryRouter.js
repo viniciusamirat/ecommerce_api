@@ -12,6 +12,7 @@ router.post('/create'
 )
 
 router.put('/create'
+  ,userMidleware.validateTokenAdmin
   ,productCategoryController.upload.single('file')
   ,productCategoryController.updateImagePath
 )

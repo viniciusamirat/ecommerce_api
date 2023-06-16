@@ -15,7 +15,23 @@ const storage = multer.diskStorage({
   }
 })
 
-const upload = multer({storage})
+const upload = multer({storage, fileFilter: (req, file, cb)=>{
+  const fileName = String(file.originalname)
+  const countDot = fileName.split('.').length - 1
+
+  if ((countDot > 1) || (countDot < 1)){
+    return cb('This file name is not valid.', false)
+  }
+  
+  const extFile = path.extname(fileName)
+  const extAllowed = ['.jpg', '.png', '.jpeg']
+
+  if (!extAllowed.includes(extFile)){
+    return cb('This extension name is not valid.',false)
+  }
+
+  return cb(null, true)
+}})
 
 const createCategory = async (req, res)=>{
   try {
