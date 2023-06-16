@@ -8,7 +8,12 @@ const userMidleware = require('../midlewares/userMidleware')
 router.post('/create'
   ,userMidleware.validateTokenAdmin
   ,productCategoryMidleware.creationValidation
-  ,productCategoryController.createCategory)
+  ,productCategoryController.createCategory
+)
 
+router.put('/create'
+  ,productCategoryController.upload.single('file')
+  ,productCategoryController.updateImagePath
+)
 
 module.exports = router
