@@ -74,9 +74,23 @@ const updateCategory = async (req, res)=>{
   }
 }
 
+const deleteCategory = async (req, res)=>{
+  try {
+    const id = Number(req.params.id)
+
+    const deletedCategory = await produtCategoryModel.deleteCategory(id)
+
+    return res.status(200).json()
+  } catch (error) {
+    console.log(error.message)
+    return res.status(500).json()
+  }
+}
+
 module.exports = {
   createCategory,
   upload,
   updateImagePath,
-  updateCategory
+  updateCategory,
+  deleteCategory
 }

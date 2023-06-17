@@ -23,6 +23,18 @@ const updateValidation = (req, res, next)=>{
   }
 }
 
+const deleteValidation = (req, res, next)=>{
+  const id = req.params.id
+
+  const validId = idValidation(id)
+
+  if (!validId){
+    return res.status(400).json('This id is not valid.')
+  } else {
+    return next()
+  }
+}
+
 const descriptionValidation = (desc)=>{
   if ((desc === undefined) || (String(desc).trim() === '') || (desc === null)){
     return false
@@ -31,7 +43,16 @@ const descriptionValidation = (desc)=>{
   }
 }
 
+const idValidation = (id)=>{
+  if ((id === undefined) || (isNaN(Number(id))) || (id === null)){
+    return false
+  } else {
+    return true
+  }
+}
+
 module.exports = {
   creationValidation,
-  updateValidation
+  updateValidation,
+  deleteValidation
 }

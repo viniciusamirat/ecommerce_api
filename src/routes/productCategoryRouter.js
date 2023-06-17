@@ -23,4 +23,9 @@ router.put('/update-description'
   ,productCategoryController.updateCategory
 )
 
+router.delete('/delete-category/:id'
+  ,productCategoryMidleware.deleteValidation
+  ,productCategoryController.deleteCategory
+)
+
 module.exports = router
