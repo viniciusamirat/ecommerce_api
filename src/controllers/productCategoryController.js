@@ -53,8 +53,22 @@ const updateImagePath = async (req, res)=>{
 
     await produtCategoryModel.updateImagePath(id, imagePath)
 
-    return res.status(200).json()
+    return res.status(201).json()
   } catch (error) {
+    console.log(error.message)
+    return res.status(500).json()
+  }
+}
+
+const updateCategory = async (req, res)=>{
+  try{
+    const desc = String(req.body.description).trim().toLowerCase()
+    const id = Number(req.query.id)
+
+    await produtCategoryModel.updateCategory(id, desc)
+
+    return res.status(201).json()
+  } catch (error){
     console.log(error.message)
     return res.status(500).json()
   }
@@ -63,5 +77,6 @@ const updateImagePath = async (req, res)=>{
 module.exports = {
   createCategory,
   upload,
-  updateImagePath
+  updateImagePath,
+  updateCategory
 }

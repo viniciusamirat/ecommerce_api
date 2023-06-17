@@ -14,7 +14,14 @@ const updateImagePath = async (id, imagePath)=>{
   return pathUpdated
 }
 
+const updateCategory =async (id, desc)=>{
+  const updatedCategory = await db.query(`
+    update public.ec_product_category set description = '${desc}' where pk_product_category = ${id}
+  `)
+}
+
 module.exports = {
   createCategory,
-  updateImagePath
+  updateImagePath,
+  updateCategory
 }

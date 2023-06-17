@@ -11,10 +11,16 @@ router.post('/create'
   ,productCategoryController.createCategory
 )
 
-router.put('/create'
+router.put('/update-image'
   ,userMidleware.validateTokenAdmin
   ,productCategoryController.upload.single('file')
   ,productCategoryController.updateImagePath
+)
+
+router.put('/update-description'
+  ,userMidleware.validateTokenAdmin
+  ,productCategoryMidleware.updateValidation
+  ,productCategoryController.updateCategory
 )
 
 module.exports = router
