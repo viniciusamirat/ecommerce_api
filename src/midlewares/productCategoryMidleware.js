@@ -13,12 +13,16 @@ const creationValidation = (req, res, next)=>{
 
 const updateValidation = (req, res, next)=>{
   const { description } = req.body
+  const id = req.query.id
 
   const validDesc = descriptionValidation(description)
+  const validId = idValidation(id)
 
   if(!validDesc){
     return res.status(400).json({message: "This description is not valid."})
-  } else {
+  } else if(!validId){
+    return res.status(400).json({message: "This id is not valid."})
+  }else {
     return next()
   }
 }

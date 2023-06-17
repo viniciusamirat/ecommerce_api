@@ -24,6 +24,7 @@ router.put('/update-description'
 )
 
 router.delete('/delete-category/:id'
+  ,userMidleware.validateTokenAdmin
   ,productCategoryMidleware.deleteValidation
   ,productCategoryController.deleteCategory
 )
