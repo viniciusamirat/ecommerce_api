@@ -1,8 +1,9 @@
 const app = require('./app')
+require('dotenv').config()
+
+const port = process.env.PORT || 3000
 
 
-
-
-app.listen(3000, ()=>{
-  console.log('servidor no ar')
+app.listen(port, ()=>{
+  console.log(`Servidor rodando em http://localhost:${port}`)
 })
