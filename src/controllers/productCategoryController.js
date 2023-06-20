@@ -1,8 +1,10 @@
 require('dotenv').config()
+const fs = require('fs')
 
 const produtCategoryModel = require('../models/productCategoryModel')
 const multer = require('multer')
 const path = require('path')
+const logs = require('../utils/files/logs')
 
 const URL_API = process.env.URL_API
 
@@ -87,7 +89,17 @@ const deleteCategory = async (req, res)=>{
   try {
     const id = Number(req.params.id)
 
-    const deletedCategory = await produtCategoryModel.deleteCategory(id)
+    const recordCategoryDeleted = await produtCategoryModel.deleteCategory(id)
+
+    const filePath = recordCategoryDeleted.rows[0].image_1
+
+    if ((filePath != null) || (filePath != undefined)){
+      const fileName = filePath.split('/').pop()
+
+      fs.unlink(`./public/categories/${fileName}`, (err)=>{
+        if (!err) return console.log(err)
+      })
+    }
 
     return res.status(200).json()
   } catch (error) {
