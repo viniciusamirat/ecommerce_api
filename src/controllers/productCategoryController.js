@@ -91,6 +91,10 @@ const deleteCategory = async (req, res)=>{
 
     const recordCategoryDeleted = await produtCategoryModel.deleteCategory(id)
 
+    if (recordCategoryDeleted.rowCount === 0) {
+      return res.status(204).json()
+    }
+
     const filePath = recordCategoryDeleted.rows[0].image_1
 
     if ((filePath != null) || (filePath != undefined)){
