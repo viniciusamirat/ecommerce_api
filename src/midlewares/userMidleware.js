@@ -32,7 +32,6 @@ const validateTokenCustomer = (req, res, next)=>{
 
     return next()
   } catch (error) {
-    console.log(error.message)
     return res.status(400).json({message: "Token invalid"})
   }
 }
@@ -52,7 +51,6 @@ const validateTokenAdmin = (req, res, next)=>{
     }
 
   } catch (error) {
-    console.log(error.message)
     return res.status(400).json({message: "Token invalid"})
   }
 }

@@ -7,7 +7,7 @@ const writeLog = (fileName, content)=>{
 
   return new Promise((resolve, reject)=>{
 
-    appendFile(fileName, newContent, (err)=>{
+    appendFile(`./src/logs/${fileName}`, newContent, (err)=>{
 
       if (err) return reject(err)
 
