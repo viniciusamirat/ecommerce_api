@@ -41,7 +41,10 @@ const createCategory = async (req, res)=>{
 
     return res.status(201).json()
   } catch (error) {
-    console.log(error.message)
+    logs.writeLog('productCategory.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }
@@ -55,7 +58,10 @@ const updateImagePath = async (req, res)=>{
 
     return res.status(201).json()
   } catch (error) {
-    console.log(error.message)
+    logs.writeLog('productCategory.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }
@@ -69,7 +75,10 @@ const updateCategory = async (req, res)=>{
 
     return res.status(201).json()
   } catch (error){
-    console.log(error.message)
+    logs.writeLog('productCategory.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }
@@ -82,7 +91,10 @@ const deleteCategory = async (req, res)=>{
 
     return res.status(200).json()
   } catch (error) {
-    console.log(error.message)
+    logs.writeLog('productCategory.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }

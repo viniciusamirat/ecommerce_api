@@ -1,6 +1,7 @@
 const userModel = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const logs = require('../utils/files/logs')
 
 const createUser = async (req, res)=>{
   try {
@@ -22,7 +23,10 @@ const createUser = async (req, res)=>{
 
     return res.status(201).json({message: "The user was created"})
   } catch (error) {
-    console.log(error.message)
+    logs.writeLog('user.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }
@@ -56,7 +60,10 @@ const getUserForLogin = async (req, res)=>{
 
     res.status(200).json({token: token})
   } catch (error){
-    console.log(error.message)
+    logs.writeLog('user.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }
@@ -66,7 +73,10 @@ const getUserByEmail = async (email)=>{
     const userExists = await userModel.getUserByEmail(email)
     return userExists
   } catch (error) {
-    console.log(error.message)
+    logs.writeLog('user.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
     return res.status(500).json()
   }
 }
