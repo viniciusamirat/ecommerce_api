@@ -11,6 +11,11 @@ router.post('/create'
   ,productCategoryController.createCategory
 )
 
+router.get('/categories'
+  ,userMidleware.validateTokenAdmin
+  ,productCategoryController.getCategories
+)
+
 router.put('/update-image'
   ,userMidleware.validateTokenAdmin
   ,productCategoryController.upload.single('file')

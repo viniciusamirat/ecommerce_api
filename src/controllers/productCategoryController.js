@@ -51,6 +51,28 @@ const createCategory = async (req, res)=>{
   }
 }
 
+const getCategories = async (req, res)=>{
+  try {
+    
+    const allCategories = await produtCategoryModel.getCategories()
+
+    if (allCategories.rowCount === 0){
+      return res.status(204).json()
+    }
+
+    const records = allCategories.rows
+
+    return res.status(200).json(records)
+
+  } catch (error) {
+    logs.writeLog('productCategory.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
+    return res.status(500).json()
+  }
+}
+
 const updateImagePath = async (req, res)=>{
   try {
     const id = Number(req.query.id)
@@ -120,5 +142,6 @@ module.exports = {
   upload,
   updateImagePath,
   updateCategory,
-  deleteCategory
+  deleteCategory,
+  getCategories
 }
