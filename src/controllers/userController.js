@@ -37,16 +37,16 @@ const getUserForLogin = async (req, res)=>{
     const pass = String(req.body.password)
 
     const user = await userModel.getUserForLogin(email)
-    const checkUser = await bcrypt.compare(pass, user.password)
+    const checkUser = await bcrypt.compare(pass, user.r_pass)
 
     if(!checkUser){
       return res.status(404).json({message: "E-mail or password incorrect."})
     }
 
     const userNoPass = {
-      email: user.email,
-      name: user.name,
-      type_user: user.type_user
+      email: user.r_email,
+      name: user.r_name,
+      type_user: user.r_type_user
     }
 
     const SECRET = process.env.SECRET
