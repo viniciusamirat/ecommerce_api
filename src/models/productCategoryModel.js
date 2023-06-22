@@ -2,33 +2,28 @@ const db = require('./connection')
 
 const createCategory = async (category)=>{
   const categoryCreated = await db.query(`
-    insert into public.ec_product_category (description) values ('${category}')
+    select * from fc_create_category('${category}')
   `)
   return categoryCreated
 }
 
 const getCategories = async ()=>{
   const allCategories = db.query(`
-    select 
-      pk_product_category as idCategory
-      ,description
-      ,image_1 as image
-    from 
-      public.ec_product_category
+    select * from fc_get_categories() as (idCategory integer, description text, image text)
   `)
   return allCategories
 }
 
 const updateImagePath = async (id, imagePath)=>{
   const pathUpdated = await db.query(`
-    update public.ec_product_category set image_1 = '${imagePath}' where pk_product_category = ${id}
+    select * from fc_update_image_category('${imagePath}', ${id})
   `)
   return pathUpdated
 }
 
 const updateCategory = async (id, desc)=>{
   const updatedCategory = await db.query(`
-    update public.ec_product_category set description = '${desc}' where pk_product_category = ${id}
+    select * from fc_update_description_category('${desc}', ${id})
   `)
   return updatedCategory
 }
