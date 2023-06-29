@@ -30,11 +30,11 @@ const updateCategory = async (id, desc)=>{
 
 const deleteCategory = async (id)=>{
   const result = await db.query(`
-    select image_1 from public.ec_product_category where pk_product_category = ${id}
+    select * from fc_get_image_category(${id})
   `)
 
   const deletedCategory = await db.query(`
-    delete from public.ec_product_category where pk_product_category = ${id}
+    select public.fc_delete_category(${id})
   `)
   return result
 }

@@ -117,7 +117,7 @@ const deleteCategory = async (req, res)=>{
       return res.status(204).json()
     }
 
-    const filePath = recordCategoryDeleted.rows[0].image_1
+    const filePath = recordCategoryDeleted.rows[0].r_image
 
     if ((filePath != null) || (filePath != undefined)){
       const fileName = filePath.split('/').pop()
