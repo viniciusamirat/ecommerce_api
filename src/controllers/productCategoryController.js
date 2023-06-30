@@ -38,8 +38,9 @@ const upload = multer({storage, fileFilter: (req, file, cb)=>{
 const createCategory = async (req, res)=>{
   try {
     const desc = String(req.body.description).trim().toLowerCase()
+    const imagePathDefault = `${URL_API}/categories/category.png` 
 
-    await produtCategoryModel.createCategory(desc)
+    await produtCategoryModel.createCategory(desc, imagePathDefault)
 
     return res.status(201).json()
   } catch (error) {

@@ -1,8 +1,8 @@
 const db = require('./connection')
 
-const createCategory = async (category)=>{
+const createCategory = async (category, imagePath)=>{
   const categoryCreated = await db.query(`
-    select * from fc_create_category('${category}')
+    select * from fc_create_category('${category}', '${imagePath}')
   `)
   return categoryCreated
 }
