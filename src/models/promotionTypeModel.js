@@ -14,7 +14,15 @@ const getPromotion = async (idPromotion)=>{
   return result.rows[0]
 }
 
+const createPromotion = async (description, percentage, active)=>{
+  const created = await db.query(`
+    select public.fc_create_promotion_type('${description}', ${percentage}, ${active}) as data
+  `)
+  return created.rows[0]
+}
+
 module.exports = {
   getPromotions
   ,getPromotion
+  ,createPromotion
 }

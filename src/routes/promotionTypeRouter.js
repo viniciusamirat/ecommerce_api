@@ -16,4 +16,9 @@ router.get('/:id'
   ,promotionTypeController.getPromotion
 )
 
+router.post('/create'
+  ,userMidleware.validateTokenAdmin
+  ,promotionTypeController.createPromotion
+)
+
 module.exports = router
