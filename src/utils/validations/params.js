@@ -23,7 +23,25 @@ const validateDescription = (desc)=>{
   }
 }
 
+const validatePercentage = (percentage)=>{
+  if ((percentage === undefined) || (percentage === null) || (isNaN(parseFloat(percentage))) || (parseFloat(percentage) < 0)){
+    return false
+  } else {
+    return true
+  }
+}
+
+const validateBoolean = (bool)=>{
+  if ((bool == true) || (bool == false) || (bool === null) || (bool === undefined)){
+    return true
+  } else {
+    return false
+  }
+}
+
 module.exports = {
   validateId
-  ,validateDescription
+  , validateDescription
+  , validatePercentage
+  , validateBoolean
 }

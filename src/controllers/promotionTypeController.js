@@ -45,9 +45,10 @@ const createPromotion = async (req, res)=>{
     const { description, percentage, active } = req.body
 
     const desc = convertions.toDescription(description)
-    const percent = parseFloat(percentage)
+    const percent = convertions.toPercentage(percentage)
+    const status = convertions.toBoolean(active)
     
-    const result = await promotionTypeModel.createPromotion(desc, percent, active)
+    const result = await promotionTypeModel.createPromotion(desc, percent, status)
 
     if (!result.data){
       return res.status(400).json()

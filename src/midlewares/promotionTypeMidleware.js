@@ -11,12 +11,20 @@ const validateGetPromotion = (req, res, next)=>{
 }
 
 const validateCreatePromotion = (req, res, next)=>{
-  const desc = String(req.body.description)
+  const desc = req.body.description
+  const percent = req.body.percentage
+  const active = req.body.active
   
   const validDesc = params.validateDescription(desc)
+  const validPercent = params.validatePercentage(percent)
+  const validActive = params.validateBoolean(active)
 
   if (!validDesc){
     return res.status(400).json({messagem: "This description is not valid."})
+  } else if (!validPercent){
+    return res.status(400).json({message: "This percentage is not valid."})
+  } else if (!validActive){
+    return res.status(400).json({message: "This status is not valid."})
   } else {
     return next()
   }
