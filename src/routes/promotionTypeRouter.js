@@ -6,19 +6,20 @@ const userMidleware = require('../midlewares/userMidleware')
 const promotionTypeMidleware = require('../midlewares/promotionTypeMidleware')
 
 router.get('/promotions'
-  ,userMidleware.validateTokenAdmin
-  ,promotionTypeController.getPromotions
+  , userMidleware.validateTokenAdmin
+  , promotionTypeController.getPromotions
 )
 
 router.get('/:id'
-  ,userMidleware.validateTokenAdmin
-  ,promotionTypeMidleware.validateGetPromotion
-  ,promotionTypeController.getPromotion
+  , userMidleware.validateTokenAdmin
+  , promotionTypeMidleware.validateGetPromotion
+  , promotionTypeController.getPromotion
 )
 
 router.post('/create'
-  ,userMidleware.validateTokenAdmin
-  ,promotionTypeController.createPromotion
+  , userMidleware.validateTokenAdmin
+  , promotionTypeMidleware.validateCreatePromotion
+  , promotionTypeController.createPromotion
 )
 
 module.exports = router

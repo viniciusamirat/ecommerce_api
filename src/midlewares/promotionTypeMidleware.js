@@ -10,6 +10,19 @@ const validateGetPromotion = (req, res, next)=>{
   }
 }
 
+const validateCreatePromotion = (req, res, next)=>{
+  const desc = String(req.body.description)
+  
+  const validDesc = params.validateDescription(desc)
+
+  if (!validDesc){
+    return res.status(400).json({messagem: "This description is not valid."})
+  } else {
+    return next()
+  }
+}
+
 module.exports = {
   validateGetPromotion
+  ,validateCreatePromotion
 }
