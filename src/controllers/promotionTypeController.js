@@ -51,7 +51,7 @@ const createPromotion = async (req, res)=>{
     const result = await promotionTypeModel.createPromotion(desc, percent, status)
 
     if (!result.data){
-      return res.status(400).json()
+      return res.status(500).json()
     }
 
     return res.status(200).json()
@@ -64,8 +64,26 @@ const createPromotion = async (req, res)=>{
   }
 }
 
+const deletePromotion = async (req, res)=>{
+  try {
+    const idPromotion = parseInt(req.params.id)
+
+    const deletedRecord = await promotionTypeModel.deletePromotion(idPromotion)
+
+    return res.status(200).json()
+
+  } catch (error) {
+    logs.writeLog('promotionType.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar logs: ${reject}`)
+    })
+    return res.status(500).json()
+  }
+}
+
 module.exports = {
   getPromotions
-  ,getPromotion
-  ,createPromotion
+  , getPromotion
+  , createPromotion
+  , deletePromotion
 }

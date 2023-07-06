@@ -30,7 +30,20 @@ const validateCreatePromotion = (req, res, next)=>{
   }
 }
 
+const validateDeletePromotion = (req, res, next)=>{
+  const idPromotion = req.params.id
+
+  const validId = params.validateId(idPromotion)
+
+  if (!validId){
+    return res.status(400).json({message: "This id is not valid."})
+  } else {
+    return next()
+  }
+}
+
 module.exports = {
   validateGetPromotion
-  ,validateCreatePromotion
+  , validateCreatePromotion
+  , validateDeletePromotion
 }

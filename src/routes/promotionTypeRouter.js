@@ -22,4 +22,10 @@ router.post('/create'
   , promotionTypeController.createPromotion
 )
 
+router.delete('/delete/:id'
+  , userMidleware.validateTokenAdmin
+  , promotionTypeMidleware.validateDeletePromotion
+  , promotionTypeController.deletePromotion
+)
+
 module.exports = router

@@ -21,8 +21,16 @@ const createPromotion = async (description, percentage, active)=>{
   return created.rows[0]
 }
 
+const deletePromotion = async (idPromotion)=>{
+  const deletedRecord = await db.query(`
+    select public.fc_delete_promotion(${idPromotion})
+  `)
+  return deletedRecord
+}
+
 module.exports = {
   getPromotions
-  ,getPromotion
-  ,createPromotion
+  , getPromotion
+  , createPromotion
+  , deletePromotion
 }
