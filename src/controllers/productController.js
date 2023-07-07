@@ -1,0 +1,87 @@
+require('dotenv').config()
+const productModel = require('../models/productModel')
+const convertions = require('../utils/conversions/convertions')
+const logs = require('../utils/files/logs')
+const path = require('path')
+const fs = require('fs')
+const multer = require('multer')
+const URL_API = process.env.URL_API
+
+const storage = multer.diskStorage({
+	destination: (req, file, cb)=>{
+		cb(null, './public/products')
+	},
+	filename: (req, file, cb)=>{
+		cb(null, `product-${Date.now()}${path.extname(file.originalname)}`)
+	}
+})
+
+const upload = multer({
+	storage,
+	fileFilter: (req, file, cb)=>{
+		const fileName = String(file.originalname)
+		const countDot = fileName.split('.').length - 1
+
+		if ((countDot > 1) || (countDot < 1)){
+			cb("This file name is not valid.", false)
+		}
+
+		const extFile = path.extname(fileName)
+		const extAllowed = ['.jpg', '.png', '.jpeg']
+
+		if (!extAllowed.includes(extFile)){
+			cb("This extension name is not valid.", false)
+		}
+
+		cb(null, true)
+	}
+})
+
+const createProduct = async (req, res)=>{
+	try {
+		const idCategory = parseInt(req.body.idcategory)
+		let idPromotion = parseInt(req.body.idPromotion)
+		const description = convertions.toDescription(req.body.description)
+		const price = convertions.toPrice(req.body.price)
+		const image1 = convertions.toPath(`${URL_API}/products/${req.file1.filename}`)
+		const image2 = convertions.toPath(`${URL_API}/products/${req.file2.filename}`)
+		const image3 = convertions.toPath(`${URL_API}/products/${req.file3.filename}`)
+		const image4 = convertions.toPath(`${URL_API}/products/${req.file4.filename}`)
+		const image5 = convertions.toPath(`${URL_API}/products/${req.file5.filename}`)
+
+		if (isNaN(idPromotion)){
+			idPromotion = null
+		}
+
+		const createdRecord = await productModel.createProduct(
+			idCategory
+			, idPromotion
+			, description
+			, price
+			, image1
+			, image2
+			, image3
+			, image4
+			, image5
+		)
+
+		if (!createdRecord.data){
+			return res.status(500).json()
+		}
+
+		return res.status(201).json()
+
+	} catch (error) {
+		logs.writeLog('productController.txt', error.message)
+		.catch((reject)=>{
+			console.log(`Erro ao gravar log: ${reject}`)
+		})
+		return res.status(500).json()
+	}
+}
+
+
+module.exports = { 
+	createProduct
+	, upload
+}
