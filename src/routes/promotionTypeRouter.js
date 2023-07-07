@@ -28,4 +28,22 @@ router.delete('/delete/:id'
   , promotionTypeController.deletePromotion
 )
 
+router.put('/updateDescription/:id'
+  , userMidleware.validateTokenAdmin
+  , promotionTypeMidleware.validateUpdatePromotionDescription
+  , promotionTypeController.updatePromotionDescription
+)
+
+router.put('/updatePercentage/:id'
+  , userMidleware.validateTokenAdmin
+  , promotionTypeMidleware.validateUpdatePromotionPercentage
+  , promotionTypeController.updatePromotionPercentage
+)
+
+router.put('/updateActive/:id'
+  , userMidleware.validateTokenAdmin
+  , promotionTypeMidleware.validateUpdatePromotionActive
+  , promotionTypeController.updatePromotionActive
+)
+
 module.exports = router

@@ -42,8 +42,59 @@ const validateDeletePromotion = (req, res, next)=>{
   }
 }
 
+const validateUpdatePromotionDescription = (req, res, next)=>{
+  const idPromotion = req.params.id
+  const description = req.body.description
+
+  const validId = params.validateId(idPromotion)
+  const validDescription = params.validateDescription(description)
+
+  if (!validId){
+    return res.status(400).json({message: "This id is not valid."})
+  } else if (!validDescription){
+    return res.status(400).json({message: "This description is not valid."})
+  } else {
+    return next()
+  }
+}
+
+const validateUpdatePromotionPercentage = (req, res, next)=>{
+  const idPromotion = req.params.id
+  const percentage = req.body.percentage
+
+  const validId = params.validateId(idPromotion)
+  const validPercentage = params.validatePercentage(percentage)
+
+  if (!validId){
+    return res.status(400).json({message: "This id is not valid."})
+  } else if (!validPercentage){
+    return res.status(400).json({message: "This percentage is not valid."})
+  }
+
+  return next()
+}
+
+const validateUpdatePromotionActive = (req, res, next)=>{
+  const idPromotion = req.params.id
+  const active = req.body.active
+
+  const validId = params.validateId(idPromotion)
+  const validActive = params.validateBoolean(active)
+
+  if (!validId){
+    return res.status(400).json({mesage: "This id is not valid."})
+  } else if (!validActive){
+    return res.status(400).json({message: "This status is not valid."})
+  }
+
+  return next()
+}
+
 module.exports = {
   validateGetPromotion
   , validateCreatePromotion
   , validateDeletePromotion
+  , validateUpdatePromotionDescription
+  , validateUpdatePromotionPercentage
+  , validateUpdatePromotionActive
 }

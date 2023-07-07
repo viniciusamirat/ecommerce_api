@@ -32,7 +32,7 @@ const validatePercentage = (percentage)=>{
 }
 
 const validateBoolean = (bool)=>{
-  if ((bool == true) || (bool == false) || (bool === null) || (bool === undefined)){
+  if ((bool === true) || (bool === false)){
     return true
   } else {
     return false

@@ -28,9 +28,33 @@ const deletePromotion = async (idPromotion)=>{
   return deletedRecord
 }
 
+const updatePromotionDescription = async (idPromotion, description)=>{
+  const updatedRecord = await db.query(`
+    select public.fc_update_promotion_description(${idPromotion}, '${description}') as data
+  `)
+  return updatedRecord.rows[0]
+}
+
+const updatePromotionPercentage = async (idPromotion, percentage)=>{
+  const updatedRecord = await db.query(`
+    select public.fc_update_promotion_percentage(${idPromotion}, ${percentage}) as data
+  `)
+  return updatedRecord.rows[0]
+}
+
+const updatePromotionActive = async (idPromotion, active)=>{
+  const updatedRecord = await db.query(`
+    select public.fc_update_promotion_active(${idPromotion}, ${active}) as data
+  `)
+  return updatedRecord.rows[0]
+}
+
 module.exports = {
   getPromotions
   , getPromotion
   , createPromotion
   , deletePromotion
+  , updatePromotionDescription
+  , updatePromotionPercentage
+  , updatePromotionActive
 }

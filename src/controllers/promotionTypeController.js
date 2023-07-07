@@ -81,9 +81,78 @@ const deletePromotion = async (req, res)=>{
   }
 }
 
+const updatePromotionDescription = async (req, res)=>{
+  try {
+    const description = convertions.toDescription(req.body.description)
+    const idPromotion = parseInt(req.params.id)
+
+    const updatedRecord = await promotionTypeModel.updatePromotionDescription(idPromotion, description)
+
+    if (!updatedRecord.data){
+      return res.status(500).json()
+    }
+
+    return res.status(201).json()
+
+  } catch (error) {
+    logs.writeLog('promotionType.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar logs: ${reject}`)
+    })
+    return res.status(500).json()
+  }
+}
+
+const updatePromotionPercentage = async (req, res)=>{
+  try {
+    const idPromotion = parseInt(req.params.id)
+    const percentage = convertions.toPercentage(req.body.percentage)
+
+    const updatedRecord = await promotionTypeModel.updatePromotionPercentage(idPromotion, percentage)
+
+    if (!updatedRecord.data){
+      return res.status(500).json()
+    } 
+
+    return res.status(201).json()
+
+  } catch (error) {
+    logs.writeLog('promotionType.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar logs: ${reject}`)
+    })
+    return res.status(500).json()
+  }
+}
+
+const updatePromotionActive = async ( req, res)=>{
+  try {
+    const idPromotion = parseInt(req.params.id)
+    const active = convertions.toBoolean(req.body.active)
+
+    const updatedRecord = await promotionTypeModel.updatePromotionActive(idPromotion, active)
+
+    if(!updatedRecord.data){
+      return res.status(500).json()
+    }
+
+    return res.status(201).json()
+
+  } catch (error) {
+    logs.writeLog('promotionType.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar logs: ${reject}`)
+    })
+    return res.status(500).json()
+  }
+}
+
 module.exports = {
   getPromotions
   , getPromotion
   , createPromotion
   , deletePromotion
+  , updatePromotionDescription
+  , updatePromotionPercentage
+  , updatePromotionActive
 }
