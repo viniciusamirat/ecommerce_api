@@ -12,6 +12,30 @@ const createProduct = async (
 	return createdRecord.rows[0]
 }
 
+const updateImages = async (id, image1, image2, image3, image4, image5)=>{
+	const updatedRecord = await db.query(`
+		select public.fc_update_product_images(${id},'${image1}','${image2}','${image3}','${image4}','${image5}') as data
+	`)
+	return updatedRecord.rows[0]
+}
+
+const getProducts = async ()=>{
+	const result = await db.query(`
+		select public.fc_get_products() as data
+	`)
+	return result.rows[0]
+}
+
+const getProduct = async (id)=>{
+	const result = await db.query(`
+		select public.fc_get_product(${id}) as data
+	`)
+	return result.rows[0]
+}
+
 module.exports = {
 	createProduct
+	, updateImages
+	, getProducts
+	, getProduct
 }

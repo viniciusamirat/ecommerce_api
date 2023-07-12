@@ -29,6 +29,19 @@ const validateCreationProduct = (req, res, next)=>{
     }
 }
 
+const validateGetProduct = (req, res, next)=>{
+  const id = req.params.id
+
+  const validId = params.validateId(id)
+
+  if (!validId){
+    return res.status(400).json({message: "This id is not valid."})
+  } else {
+    return next()
+  }
+}
+
 module.exports = {
   validateCreationProduct
+  , validateGetProduct
 }

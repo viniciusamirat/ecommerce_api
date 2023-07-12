@@ -45,11 +45,7 @@ const createProduct = async (req, res)=>{
 		let idPromotion = parseInt(req.body.idPromotion)
 		const description = convertions.toDescription(req.body.description)
 		const price = convertions.toPrice(req.body.price)
-		/*const image1 = convertions.toPath(`${URL_API}/products/${req.file1.filename}`)
-		const image2 = convertions.toPath(`${URL_API}/products/${req.file2.filename}`)
-		const image3 = convertions.toPath(`${URL_API}/products/${req.file3.filename}`)
-		const image4 = convertions.toPath(`${URL_API}/products/${req.file4.filename}`)
-		const image5 = convertions.toPath(`${URL_API}/products/${req.file5.filename}`)*/
+		/**/
 
 		if (isNaN(idPromotion)){
 			idPromotion = null
@@ -90,8 +86,84 @@ const createProduct = async (req, res)=>{
 	}
 }
 
+const updateImages = async (req, res)=>{
+	try {
+		const idProduct = parseInt(req.params.id)
+		
+		const image1 = req.files.file1 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file1.filename}`)
+		const image2 = req.files.file2 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file2.filename}`)
+		const image3 = req.files.file3 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file3.filename}`)
+		const image4 = req.files.file4 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file4.filename}`)
+		const image5 = req.files.file5 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file5.filename}`)
+
+		const updatedRecord = await productModel.updateImages(
+			idProduct
+			, image1
+			, image2
+			, image3
+			, image4
+			, image5
+		)
+
+		if (!updatedRecord.data){
+			return res.status(500).json()
+		}
+
+		return res.status(201).json()
+
+	} catch (error) {
+		logs.writeLog('product.txt', error.message)
+		.catch((reject)=>{
+			console.log(`Erro ao gravar log: ${reject}`)
+		})
+		return res.status(500).json()
+	}
+}
+
+const getProducts = async (req, res)=>{
+	try {
+		const result = await productModel.getProducts()
+
+		if (result.data === '[]'){
+			return res.status(204).json()
+		}
+
+		return res.status(200).json(result)
+
+	} catch (error) {
+		logs.writeLog('product.txt', error.message)
+		.catch((reject)=>{
+			console.log(`Erro ao gravar log: ${reject}`)
+		})
+		return res.status(500).json()
+	}
+}
+
+const getProduct = async (req, res)=>{
+	try {
+		const idProduct = parseInt(req.params.id)
+
+		const result = await productModel.getProduct(idProduct)
+
+		if (result.data === '[]'){
+			return res.status(204).json()
+		}
+
+		return res.status(200).json(result)
+
+	} catch (error) {
+		logs.writeLog('product.txt', error.message)
+		.catch((reject)=>{
+			console.log(`Erro ao gravar log: ${reject}`)
+		})
+		return res.status(500).json()
+	}
+}
 
 module.exports = { 
 	createProduct
 	, upload
+	, updateImages
+	, getProducts
+	, getProduct
 }
