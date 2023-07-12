@@ -49,6 +49,13 @@ const updatePromotionActive = async (idPromotion, active)=>{
   return updatedRecord.rows[0]
 }
 
+const getExistsPromotion = async (id)=>{
+  const result = await db.query(`
+    select public.fc_get_exists_promotion(${id}) as data
+  `)
+  return result.rows[0]
+}
+
 module.exports = {
   getPromotions
   , getPromotion
@@ -57,4 +64,5 @@ module.exports = {
   , updatePromotionDescription
   , updatePromotionPercentage
   , updatePromotionActive
+  , getExistsPromotion
 }

@@ -39,10 +39,18 @@ const deleteCategory = async (id)=>{
   return result
 }
 
+const getExistsCategory = async (id)=>{
+  const result = await db.query(`
+    select public.fc_get_exists_category(${id}) as data
+  `)
+  return result.rows[0]
+}
+
 module.exports = {
   createCategory,
   updateImagePath,
   updateCategory,
   deleteCategory,
-  getCategories
+  getCategories,
+  getExistsCategory
 }

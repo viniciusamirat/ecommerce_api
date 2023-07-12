@@ -39,9 +39,18 @@ const validateBoolean = (bool)=>{
   }
 }
 
+const validatePrice = (price)=>{
+  if ((price === undefined) || (isNaN(parseFloat(price))) || (price === null) || (price === '') || (parseFloat(price) < 0)){
+    return false
+  } else {
+    return true
+  }
+}
+
 module.exports = {
   validateId
   , validateDescription
   , validatePercentage
   , validateBoolean
+  , validatePrice
 }

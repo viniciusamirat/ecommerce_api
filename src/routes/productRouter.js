@@ -8,7 +8,8 @@ const files = ['file1','file2','file3','file4','file5',]
 
 router.post('/create'
 	, userMidleware.validateTokenAdmin
-	, productController.upload.fields(files)
+	//, productController.upload.fields(files)
+	, productMidleware.validateCreationProduct
 	, productController.createProduct
 )
 
