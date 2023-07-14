@@ -20,6 +20,7 @@ router.post('/create'
 
 router.put('/updateImages/:id'
 	, userMidleware.validateTokenAdmin
+	, productMidleware.validateUpdateImages
 	, productController.upload.fields(files)
 	, productController.updateImages
 )

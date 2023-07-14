@@ -89,27 +89,33 @@ const createProduct = async (req, res)=>{
 const updateImages = async (req, res)=>{
 	try {
 		const idProduct = parseInt(req.params.id)
-		
-		const image1 = req.files.file1 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file1[0].filename}`)
-		const image2 = req.files.file2 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file2[0].filename}`)
-		const image3 = req.files.file3 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file3[0].filename}`)
-		const image4 = req.files.file4 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file4[0].filename}`)
-		const image5 = req.files.file5 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file5[0].filename}`)
 
-		const updatedRecord = await productModel.updateImages(
-			idProduct
-			, image1
-			, image2
-			, image3
-			, image4
-			, image5
-		)
+		const record = await productModel.getProduct(idProduct)
 
-		if (!updatedRecord.data){
-			return res.status(500).json()
+		if (record.data != '[]'){
+			const image1 = req.files.file1 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file1[0].filename}`)
+			const image2 = req.files.file2 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file2[0].filename}`)
+			const image3 = req.files.file3 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file3[0].filename}`)
+			const image4 = req.files.file4 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file4[0].filename}`)
+			const image5 = req.files.file5 === undefined ? null : convertions.toPath(`${URL_API}/products/${req.files.file5[0].filename}`)
+
+			const updatedRecord = await productModel.updateImages(
+				idProduct
+				, image1
+				, image2
+				, image3
+				, image4
+				, image5
+			)
+
+			if (!updatedRecord.data){
+				return res.status(500).json()
+			}
+
+			return res.status(201).json()
 		}
-
-		return res.status(201).json()
+		
+		return res.status(204).json()
 
 	} catch (error) {
 		logs.writeLog('product.txt', error.message)

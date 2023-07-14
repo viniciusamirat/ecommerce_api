@@ -1,4 +1,5 @@
 const params = require('../utils/validations/params')
+const productModel = require('../models/productModel')
 
 const validateCreationProduct = (req, res, next)=>{
   const idCategory = req.body.idCategory
@@ -120,6 +121,24 @@ const validateDeleteProduct = (req, res, next)=>{
   return next()
 }
 
+const validateUpdateImages = async (req, res, next)=>{
+  const id = req.params.id
+
+  const validId = params.validateId(id)
+
+  if (!validId){
+    return res.status(400).json({message: "This id is not valid."})
+  }
+
+  const productExist = await productModel.getProduct(parseInt(id))
+
+  if (productExist.data === '[]'){
+    return res.status(204).json()
+  }
+
+  return next()
+}
+
 module.exports = {
   validateCreationProduct
   , validateGetProduct
@@ -128,4 +147,5 @@ module.exports = {
   , validateUpdatePromotion
   , validateUpdatePrice
   , validateDeleteProduct
+  , validateUpdateImages
 }
