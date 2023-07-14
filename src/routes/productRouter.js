@@ -35,4 +35,34 @@ router.get('/:id'
 	, productController.getProduct
 )
 
+router.put('/updateDescription/:id'
+	, userMidleware.validateTokenAdmin
+	, productMidleware.validateUpdateDescription
+	, productController.updateProductDescription
+)
+
+router.put('/updateCategory'
+	, userMidleware.validateTokenAdmin
+	, productMidleware.validateUpdateCategory
+	, productController.updateProductCategory
+)
+
+router.put('/updatePromotion'
+	, userMidleware.validateTokenAdmin
+	, productMidleware.validateUpdatePromotion
+	, productController.updateProductPromotion
+)
+
+router.put('/updatePrice/:id'
+	, userMidleware.validateTokenAdmin
+	, productMidleware.validateUpdatePrice
+	, productController.updateProductPrice
+)
+
+router.delete('/delete/:id'
+	, userMidleware.validateTokenAdmin
+	, productMidleware.validateDeleteProduct
+	, productController.deleteProduct
+)
+
 module.exports = router
