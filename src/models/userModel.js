@@ -17,7 +17,7 @@ const getUserByEmail = async (email)=>{
 
 const getUserForLogin = async (email, pass)=>{
 	const user = await db.query(`
-		select * from fc_get_user_for_login('${email}')
+		select * from public.fc_get_user_for_login('${email}') as data
 	`)
 	return user.rows[0]
 }

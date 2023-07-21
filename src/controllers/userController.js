@@ -2,6 +2,7 @@ const userModel = require('../models/userModel')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const logs = require('../utils/files/logs')
+const convertions = require('../utils/conversions/convertions')
 
 const createUser = async (req, res)=>{
   try {
@@ -36,17 +37,24 @@ const getUserForLogin = async (req, res)=>{
     const email = String(req.body.email).trim().toLowerCase()
     const pass = String(req.body.password)
 
-    const user = await userModel.getUserForLogin(email)
-    const checkUser = await bcrypt.compare(pass, user.r_pass)
+    const userString = await userModel.getUserForLogin(email)
 
+    if (userString.data === '[]') {
+      return res.status(400).json({message: "Invalid e-mail."})
+    }
+
+    const user = JSON.parse(userString.data)
+    
+    const checkUser = await bcrypt.compare(pass, user[0].password)
+    
     if(!checkUser){
       return res.status(404).json({message: "E-mail or password incorrect."})
     }
 
     const userNoPass = {
-      email: user.r_email,
-      name: user.r_name,
-      type_user: user.r_type_user
+      email: user[0].email,
+      name: user[0].name,
+      type_user: user[0].type_user
     }
 
     const SECRET = process.env.SECRET
