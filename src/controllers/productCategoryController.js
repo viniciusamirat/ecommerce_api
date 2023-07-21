@@ -5,6 +5,7 @@ const produtCategoryModel = require('../models/productCategoryModel')
 const multer = require('multer')
 const path = require('path')
 const logs = require('../utils/files/logs')
+const convertions = require('../utils/conversions/convertions')
 
 const URL_API = process.env.URL_API
 
@@ -37,10 +38,14 @@ const upload = multer({storage, fileFilter: (req, file, cb)=>{
 
 const createCategory = async (req, res)=>{
   try {
-    const desc = String(req.body.description).trim().toLowerCase()
+    const desc = convertions.toDescription(req.body.description)
     const imagePathDefault = `${URL_API}/categories/category.png` 
 
-    await produtCategoryModel.createCategory(desc, imagePathDefault)
+    const createdRecord = await produtCategoryModel.createCategory(desc, imagePathDefault)
+
+    if (!createdRecord.data){
+      return res.status(500).json()
+    }
 
     return res.status(201).json()
   } catch (error) {
@@ -57,11 +62,11 @@ const getCategories = async (req, res)=>{
     
     const allCategories = await produtCategoryModel.getCategories()
 
-    if (allCategories.rowCount === 0){
+    if (allCategories.data === '[]'){
       return res.status(204).json()
     }
 
-    const records = allCategories.rows
+    const records = allCategories.data
 
     return res.status(200).json(records)
 
@@ -76,10 +81,14 @@ const getCategories = async (req, res)=>{
 
 const updateImagePath = async (req, res)=>{
   try {
-    const id = Number(req.query.id)
-    const imagePath = `${URL_API}/categories/${req.file.filename}` 
+    const id = parseInt(req.query.id)
+    const imagePath = convertions.toPath(`${URL_API}/categories/${req.file.filename}`)
 
-    await produtCategoryModel.updateImagePath(id, imagePath)
+    const updatedRecord = await produtCategoryModel.updateImagePath(id, imagePath)
+
+    if (!updatedRecord.data){
+      return res.status(500).json()
+    }
 
     return res.status(201).json()
   } catch (error) {
@@ -93,10 +102,14 @@ const updateImagePath = async (req, res)=>{
 
 const updateCategory = async (req, res)=>{
   try{
-    const desc = String(req.body.description).trim().toLowerCase()
-    const id = Number(req.query.id)
+    const desc = convertions.toDescription(req.body.description)
+    const id = parseInt(req.query.id)
 
-    await produtCategoryModel.updateCategory(id, desc)
+    const updatedRecord = await produtCategoryModel.updateCategory(id, desc)
+
+    if (!updatedRecord.data){
+      return res.status(500).json()
+    }
 
     return res.status(201).json()
   } catch (error){
@@ -110,7 +123,7 @@ const updateCategory = async (req, res)=>{
 
 const deleteCategory = async (req, res)=>{
   try {
-    const id = Number(req.params.id)
+    const id = parseInt(req.params.id)
 
     const recordCategoryDeleted = await produtCategoryModel.deleteCategory(id)
 

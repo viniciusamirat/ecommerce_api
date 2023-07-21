@@ -2,39 +2,39 @@ const db = require('./connection')
 
 const createCategory = async (category, imagePath)=>{
   const categoryCreated = await db.query(`
-    select * from fc_create_category('${category}', '${imagePath}')
+    select * from fc_create_category('${category}', '${imagePath}') as data
   `)
-  return categoryCreated
+  return categoryCreated.rows[0]
 }
 
 const getCategories = async ()=>{
-  const allCategories = db.query(`
-    select * from fc_get_categories() as (idCategory integer, description text, image text)
+  const allCategories = await db.query(`
+    select * from public.fc_get_categories() as data
   `)
-  return allCategories
+  return allCategories.rows[0]
 }
 
 const updateImagePath = async (id, imagePath)=>{
   const pathUpdated = await db.query(`
-    select * from fc_update_image_category('${imagePath}', ${id})
+    select * from public.fc_update_image_category('${imagePath}', ${id}) as data
   `)
-  return pathUpdated
+  return pathUpdated.rows[0]
 }
 
 const updateCategory = async (id, desc)=>{
   const updatedCategory = await db.query(`
-    select * from fc_update_description_category('${desc}', ${id})
+    select * from fc_update_description_category('${desc}', ${id}) as data
   `)
-  return updatedCategory
+  return updatedCategory.rows[0]
 }
 
 const deleteCategory = async (id)=>{
   const result = await db.query(`
-    select * from fc_get_image_category(${id})
+    select * from fc_get_image_category(${id}) as data
   `)
 
   const deletedCategory = await db.query(`
-    select public.fc_delete_category(${id})
+    select public.fc_delete_category(${id}) as data
   `)
   return result
 }

@@ -1,8 +1,8 @@
-
+const params = require('../utils/validations/params')
 
 const creationValidation = (req, res, next)=>{
   const { description } = req.body
-  const validDesc = descriptionValidation(description)
+  const validDesc = params.validateDescription(description)
 
   if (!validDesc){
     return res.status(400).json({message: "this description is not valid."})
@@ -15,8 +15,8 @@ const updateValidation = (req, res, next)=>{
   const { description } = req.body
   const id = req.query.id
 
-  const validDesc = descriptionValidation(description)
-  const validId = idValidation(id)
+  const validDesc = params.validateDescription(description)
+  const validId = params.validateId(id)
 
   if(!validDesc){
     return res.status(400).json({message: "This description is not valid."})
@@ -30,28 +30,12 @@ const updateValidation = (req, res, next)=>{
 const deleteValidation = (req, res, next)=>{
   const id = req.params.id
 
-  const validId = idValidation(id)
+  const validId = params.validateId(id)
 
   if (!validId){
     return res.status(400).json('This id is not valid.')
   } else {
     return next()
-  }
-}
-
-const descriptionValidation = (desc)=>{
-  if ((desc === undefined) || (String(desc).trim() === '') || (desc === null)){
-    return false
-  } else {
-    return true
-  }
-}
-
-const idValidation = (id)=>{
-  if ((id === undefined) || (isNaN(Number(id))) || (id === null)){
-    return false
-  } else {
-    return true
   }
 }
 
