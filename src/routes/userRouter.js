@@ -5,6 +5,6 @@ const userController = require('../controllers/userController')
 
 router.post('/create', userMidleware.validateCreateUser, userController.createUser)
 
-router.get('/login', userController.getUserForLogin)
+router.get('/login', userMidleware.validateLogin, userController.getUserForLogin)
 
 module.exports = router

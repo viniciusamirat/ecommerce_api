@@ -5,12 +5,10 @@ const logs = require('../utils/files/logs')
 const convertions = require('../utils/conversions/convertions')
 
 const createUser = async (req, res)=>{
-  try {
-    let { email, password, name } = req.body
-    
-    email = String(email).trim().toLowerCase()
-    password = String(password)
-    name = String(name).trim().toLowerCase()
+  try {    
+    const email = convertions.toEmail(req.body.email)
+    const password = convertions.toEmail(req.body.password)
+    const name = convertions.toEmail(req.body.name)
 
     const emailInUse = await getUserByEmail(email)
     if(emailInUse){
@@ -34,8 +32,8 @@ const createUser = async (req, res)=>{
 
 const getUserForLogin = async (req, res)=>{
   try{
-    const email = String(req.body.email).trim().toLowerCase()
-    const pass = String(req.body.password)
+    const email = convertions.toEmail(req.body.email)
+    const pass = convertions.toEmail(req.body.password)
 
     const userString = await userModel.getUserForLogin(email)
 

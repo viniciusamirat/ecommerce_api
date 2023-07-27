@@ -47,10 +47,37 @@ const validatePrice = (price)=>{
   }
 }
 
+const validateEmail = (email)=>{
+  if((email === undefined) || (email === null) || (String(email).trim() === '') || (!String(email).includes('@')) || (!String(email).includes('.com'))){
+    return false
+  } else{
+    return true
+  }
+}
+
+const validateName = (name)=>{
+  if((name === undefined) || (name === null) || (String(name).trim() === '')){
+    return false
+  } else{
+    return true
+  }
+}
+
+const validatePassword = (pass)=>{
+  if((pass === undefined) || (pass === null) || (String(pass).trim() === '')){
+    return false
+  } else{
+    return true
+  }
+}
+
 module.exports = {
   validateId
   , validateDescription
   , validatePercentage
   , validateBoolean
   , validatePrice
+  , validateEmail
+  , validateName
+  , validatePassword
 }
