@@ -11,7 +11,7 @@ router.get('/promotions'
 )
 
 router.get('/:id'
-  , userMidleware.validateTokenAdmin
+  , userMidleware.validateTokenCustomer
   , promotionTypeMidleware.validateGetPromotion
   , promotionTypeController.getPromotion
 )

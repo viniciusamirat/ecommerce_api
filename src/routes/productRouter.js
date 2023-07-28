@@ -26,12 +26,12 @@ router.put('/updateImages/:id'
 )
 
 router.get('/products'
-	, userMidleware.validateTokenAdmin
+	, userMidleware.validateTokenCustomer
 	, productController.getProducts
 )
 
 router.get('/:id'
-	, userMidleware.validateTokenAdmin
+	, userMidleware.validateTokenCustomer
 	, productMidleware.validateGetProduct
 	, productController.getProduct
 )
