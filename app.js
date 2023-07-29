@@ -5,8 +5,20 @@ const productcategoryRouter = require('./src/routes/productCategoryRouter')
 const promotionTypeRouter = require('./src/routes/promotionTypeRouter')
 const productRouter = require('./src/routes/productRouter')
 const wishlistRouter = require('./src/routes/wishlistRouter')
+const cors = require('cors')
 
 app.use(express.json())
+
+app.use((req, res, next)=>{
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3003")
+  res.setHeader("Access-Control-Allow-Methods", 'GET, POST, PUT, DELETE')
+  app.use(cors())
+  return next()
+})
+
+app.use('/', (req, res)=>{
+  res.send('hello world')
+})
 
 app.use('/users', userRouter)
 
