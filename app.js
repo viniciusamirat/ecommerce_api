@@ -16,10 +16,6 @@ app.use((req, res, next)=>{
   return next()
 })
 
-app.use('/', (req, res)=>{
-  res.send('hello world')
-})
-
 app.use('/users', userRouter)
 
 app.use('/category', productcategoryRouter)

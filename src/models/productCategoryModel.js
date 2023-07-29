@@ -14,6 +14,13 @@ const getCategories = async ()=>{
   return allCategories.rows[0]
 }
 
+const getCategory = async (categoryId)=>{
+  const category = await db.query(`
+    select * from public.fc_get_category(${categoryId}) as data
+  `)
+  return category.rows[0]
+}
+
 const updateImagePath = async (id, imagePath)=>{
   const pathUpdated = await db.query(`
     select * from public.fc_update_image_category('${imagePath}', ${id}) as data
@@ -52,5 +59,6 @@ module.exports = {
   updateCategory,
   deleteCategory,
   getCategories,
+  getCategory,
   getExistsCategory
 }

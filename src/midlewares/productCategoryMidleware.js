@@ -39,8 +39,21 @@ const deleteValidation = (req, res, next)=>{
   }
 }
 
+const validateGetCategory = (req, res, next)=>{
+  const id = req.params.id
+
+  const validId = params.validateId(id)
+
+  if (!validId){
+    return res.status(400).json('This id is not valid.')
+  } else {
+    return next()
+  }
+}
+
 module.exports = {
   creationValidation,
   updateValidation,
-  deleteValidation
+  deleteValidation,
+  validateGetCategory
 }

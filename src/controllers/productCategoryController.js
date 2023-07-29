@@ -66,9 +66,28 @@ const getCategories = async (req, res)=>{
       return res.status(204).json()
     }
 
-    const records = allCategories.data
+    return res.status(200).json(allCategories)
 
-    return res.status(200).json(records)
+  } catch (error) {
+    logs.writeLog('productCategory.txt', error.message)
+    .catch((reject)=>{
+      console.log(`Erro ao gravar log: ${reject}`)
+    })
+    return res.status(500).json()
+  }
+}
+
+const getCategory = async (req, res)=>{
+  try {
+    const id = parseInt(req.params.id)
+
+    const category = await produtCategoryModel.getCategory(id)
+
+    if (category.data === '[]'){
+      return res.status(204).json()
+    }
+
+    return res.status(200).json(category)
 
   } catch (error) {
     logs.writeLog('productCategory.txt', error.message)
@@ -157,5 +176,6 @@ module.exports = {
   updateImagePath,
   updateCategory,
   deleteCategory,
-  getCategories
+  getCategories,
+  getCategory
 }
