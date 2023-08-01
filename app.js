@@ -5,7 +5,11 @@ const productcategoryRouter = require('./src/routes/productCategoryRouter')
 const promotionTypeRouter = require('./src/routes/promotionTypeRouter')
 const productRouter = require('./src/routes/productRouter')
 const wishlistRouter = require('./src/routes/wishlistRouter')
+
 const cors = require('cors')
+
+const swaggerUi = require('swagger-ui-express')
+const swaggerJson = require('./swagger.json')
 
 app.use(express.json())
 
@@ -15,6 +19,8 @@ app.use((req, res, next)=>{
   app.use(cors())
   return next()
 })
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerJson))
 
 app.use('/users', userRouter)
 
