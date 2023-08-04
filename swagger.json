@@ -111,6 +111,30 @@
           }
         }
       }
+    },
+    "/category/create":{
+      "post":{
+        "summary": "Criação de categorias.",
+        "description": "Esta rota irá criar novas categorias para os produtos.",
+        "tags": ["Category"],
+        "security": [{"bearerAuth": []}],
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "$ref": "#components/schemas/CreateCategory"
+              },
+              "examples":{
+                "CreateCategory":{
+                  "value":{
+                    "description": "Nova categoria"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -139,6 +163,21 @@
             "type": "string"
           }
         }
+      },
+      "CreateCategory":{
+        "type": "object",
+        "properties":{
+          "description":{
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemas":{
+      "bearerAuth":{
+        "type": "http",
+        "schema": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
